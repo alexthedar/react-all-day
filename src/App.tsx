@@ -12,10 +12,26 @@ interface DispatchProps {
   increment: (amount: number) => void;
   delayIncrement: (amount: number) => void;
 }
+interface ComponentState {
+  isLoading: boolean;
+}
 
 type Props = {} & ConnectProps & DispatchProps;
 
-export class App extends React.PureComponent<Props> {
+export class App extends React.PureComponent<Props, ComponentState> {
+  state: ComponentState = {
+    isLoading: false
+  };
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.counter !== this.props.counter) {
+      this.setLoading(false);
+    }
+  }
+  setLoading(loading: boolean) {
+    this.setState({
+      isLoading: loading
+    });
+  }
   render() {
     return (
       <>
@@ -32,10 +48,10 @@ export class App extends React.PureComponent<Props> {
               <div>
                 <p className="heading">Counter</p>
                 <p className="title">{this.props.counter}</p>
+                {this.state.isLoading ? <span>Loading...</span> : null}
               </div>
             </div>
           </div>
-          {/* Challenge 5: <div className="notification is-danger" /> */}
           <div className="field is-grouped">
             <p className="control">
               <button
@@ -50,7 +66,10 @@ export class App extends React.PureComponent<Props> {
               <button
                 className="button"
                 id="delay-increment-btn"
-                onClick={() => this.props.delayIncrement(this.props.counter)}
+                onClick={() => {
+                  this.setLoading(true);
+                  return this.props.delayIncrement(this.props.counter);
+                }}
               >
                 Click to increment slowly
               </button>
@@ -85,7 +104,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
-
-{
-  /* <span>Loading...</span>; */
-}

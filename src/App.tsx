@@ -2,12 +2,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import "./App.css";
 import { RootState } from "./redux/reducers";
+import { counterActions, RootAction } from "./redux/actions";
+import { ThunkDispatch } from "redux-thunk";
 
 interface ConnectProps {
   counter: number;
 }
+interface DispatchProps {
+  increment: (amount: number) => void;
+  delayIncrement: (amount: number) => void;
+}
 
-type Props = {} & ConnectProps;
+type Props = {} & ConnectProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
   render() {
@@ -32,12 +38,20 @@ export class App extends React.PureComponent<Props> {
           {/* Challenge 5: <div className="notification is-danger" /> */}
           <div className="field is-grouped">
             <p className="control">
-              <button className="button" id="increment-btn">
+              <button
+                className="button"
+                id="increment-btn"
+                onClick={() => this.props.increment(this.props.counter)}
+              >
                 Click to increment
               </button>
             </p>
             <p className="control">
-              <button className="button" id="delay-increment-btn">
+              <button
+                className="button"
+                id="delay-increment-btn"
+                onClick={() => this.props.delayIncrement(this.props.counter)}
+              >
                 Click to increment slowly
               </button>
             </p>
@@ -53,8 +67,25 @@ export class App extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootState, any, RootAction>
+): DispatchProps => {
+  return {
+    delayIncrement: (count: number) =>
+      dispatch(counterActions.delayIncrement(count)),
+    increment: (count: number) => dispatch(counterActions.increment(count))
+  };
+};
+
+const mapStateToProps = (state: RootState): ConnectProps => ({
   counter: state.counter.value
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
+{
+  /* <span>Loading...</span>; */
+}

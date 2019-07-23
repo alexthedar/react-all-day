@@ -19,9 +19,12 @@ interface ComponentState {
 type Props = {} & ConnectProps & DispatchProps;
 
 export class App extends React.PureComponent<Props, ComponentState> {
-  state: ComponentState = {
-    isLoading: false
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isLoading: false
+    };
+  }
   componentDidUpdate(prevProps: Props) {
     if (prevProps.counter !== this.props.counter) {
       this.setLoading(false);

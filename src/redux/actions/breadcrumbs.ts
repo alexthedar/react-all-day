@@ -1,5 +1,4 @@
 import { Action } from "redux";
-
 import { GET_BREADCRUMBS, SET_BREADCRUMBS } from "../constants";
 import { PayloadAction, ThunkAction } from "./interfaces";
 import { Server } from "../../Server";
@@ -21,7 +20,7 @@ export const actionCreators = {
       return dispatch(actionCreators.setBreadcrumbs(breadcrumbs));
     };
   },
-  setBreadcrumbs(breadcrumbs: number[]): SetBreadcrumbsAction {
+  setBreadcrumbs(breadcrumbs: []): SetBreadcrumbsAction {
     return { payload: breadcrumbs, type: SET_BREADCRUMBS };
   }
 };

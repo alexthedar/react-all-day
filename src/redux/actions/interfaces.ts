@@ -32,14 +32,6 @@ export interface Action<P, M> extends GenericAction<P, M> {
 export interface PayloadAction<P> extends GenericAction<P, void> {
   payload: P;
 }
-/** An action with a non-optional payload. */
-// export interface LoadAction<P> extends GenericAction<P, void> {
-//   payload: P;
-// }
-/** An action with a non-optional payload. */
-export interface BreadcrumbAction<P> extends GenericAction<P, void> {
-  payload: P;
-}
 
 /** An action without a payload but with non-optional metadata. */
 export interface MetaAction<M> extends GenericAction<void, M> {

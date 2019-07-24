@@ -10,7 +10,7 @@ import { Breadcrumb } from "./Breadcrumb";
 interface ConnectProps {
   value: number;
   isLoading: boolean;
-  breadcrumbs: number[];
+  breadcrumbs: [];
 }
 interface DispatchProps {
   increment: (amount: number) => void;
@@ -21,11 +21,13 @@ type Props = {} & ConnectProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
   render() {
-    const { increment, delayIncrement, value, isLoading } = this.props;
-    // const test = Server.getStuff().then(res => (
-    //   <Breadcrumb values={res.filter(item => item > 0.5)} />
-    // ));
-
+    const {
+      increment,
+      delayIncrement,
+      value,
+      isLoading,
+      breadcrumbs
+    } = this.props;
     return (
       <>
         <section className="hero is-primary">
@@ -36,8 +38,7 @@ export class App extends React.PureComponent<Props> {
           </div>
         </section>
         <section className="container">
-          {/* {test} */}
-          <Breadcrumb values={[1, 2, 3, 3]} />
+          <Breadcrumb values={breadcrumbs} />
           <div className="level">
             <div className="level-item has-text-centered">
               <div>

@@ -2,7 +2,7 @@ import { BreadcrumbAction } from "../actions/breadcrumbs";
 import { GET_BREADCRUMBS } from "../constants";
 
 export type State = Readonly<{
-  breadcrumbs: number[];
+  breadcrumbs: [];
 }>;
 
 export const initialState: State = {

@@ -12,5 +12,3 @@ export const filterBreadcrumbs = createSelector(
 );
 
 // breadcrumbs.filter((item: number) => item > 0.5)
-// // breadcrumbs => console.log(breadcrumbs)
-// //breadcrumbs: => breadcrumbs.filter((item: number) => item > 0.5)

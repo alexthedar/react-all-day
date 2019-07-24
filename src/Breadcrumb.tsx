@@ -11,7 +11,7 @@ export class Breadcrumb extends React.PureComponent<Props> {
       <div className="breadcrumb">
         <ul>
           {values.map(item => (
-            <li key={`breadcrumb${item}`}>{item.toFixed(3)}</li>
+            <li key={`breadcrumb${item + Math.random()}`}>{item.toFixed(3)}</li>
           ))}
         </ul>
       </div>

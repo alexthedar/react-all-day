@@ -4,38 +4,28 @@ import "./App.css";
 import { RootState } from "./redux/reducers";
 import { counterActions, RootAction } from "./redux/actions";
 import { ThunkDispatch } from "redux-thunk";
+import { filterBreadcrumbs } from "./redux/selectors/index";
+import { Breadcrumb } from "./Breadcrumb";
 
 interface ConnectProps {
-  counter: number;
+  value: number;
+  isLoading: boolean;
+  breadcrumbs: number[];
 }
 interface DispatchProps {
   increment: (amount: number) => void;
   delayIncrement: (amount: number) => void;
 }
-interface ComponentState {
-  isLoading: boolean;
-}
 
 type Props = {} & ConnectProps & DispatchProps;
 
-export class App extends React.PureComponent<Props, ComponentState> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoading: false
-    };
-  }
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.counter !== this.props.counter) {
-      this.setLoading(false);
-    }
-  }
-  setLoading(loading: boolean) {
-    this.setState({
-      isLoading: loading
-    });
-  }
+export class App extends React.PureComponent<Props> {
   render() {
+    const { increment, delayIncrement, value, isLoading } = this.props;
+    // const test = Server.getStuff().then(res => (
+    //   <Breadcrumb values={res.filter(item => item > 0.5)} />
+    // ));
+
     return (
       <>
         <section className="hero is-primary">
@@ -46,12 +36,14 @@ export class App extends React.PureComponent<Props, ComponentState> {
           </div>
         </section>
         <section className="container">
+          {/* {test} */}
+          <Breadcrumb values={[1, 2, 3, 3]} />
           <div className="level">
             <div className="level-item has-text-centered">
               <div>
                 <p className="heading">Counter</p>
-                <p className="title">{this.props.counter}</p>
-                {this.state.isLoading ? <span>Loading...</span> : null}
+                <p className="title">{value}</p>
+                {isLoading ? <span>Loading...</span> : null}
               </div>
             </div>
           </div>
@@ -60,7 +52,7 @@ export class App extends React.PureComponent<Props, ComponentState> {
               <button
                 className="button"
                 id="increment-btn"
-                onClick={() => this.props.increment(this.props.counter)}
+                onClick={() => increment(value)}
               >
                 Click to increment
               </button>
@@ -69,10 +61,7 @@ export class App extends React.PureComponent<Props, ComponentState> {
               <button
                 className="button"
                 id="delay-increment-btn"
-                onClick={() => {
-                  this.setLoading(true);
-                  return this.props.delayIncrement(this.props.counter);
-                }}
+                onClick={() => delayIncrement(value)}
               >
                 Click to increment slowly
               </button>
@@ -92,16 +81,24 @@ export class App extends React.PureComponent<Props, ComponentState> {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, RootAction>
 ): DispatchProps => {
+  const { increment, delayIncrement } = counterActions;
   return {
-    delayIncrement: (count: number) =>
-      dispatch(counterActions.delayIncrement(count)),
-    increment: (count: number) => dispatch(counterActions.increment(count))
+    delayIncrement: (count: number) => dispatch(delayIncrement(count)),
+    increment: (count: number) => dispatch(increment(count))
   };
 };
 
-const mapStateToProps = (state: RootState): ConnectProps => ({
-  counter: state.counter.value
-});
+const mapStateToProps = (state: RootState): ConnectProps => {
+  const {
+    counter: { value },
+    loading: { isLoading }
+  } = state;
+  return {
+    value,
+    isLoading,
+    breadcrumbs: filterBreadcrumbs(state)
+  };
+};
 
 export default connect(
   mapStateToProps,

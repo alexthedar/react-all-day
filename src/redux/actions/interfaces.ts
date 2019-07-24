@@ -9,6 +9,8 @@ import { ThunkAction } from "redux-thunk";
 
 import { RootState } from "../reducers";
 import { CounterAction } from "./counter";
+import { LoadingAction } from "./loading";
+import { BreadcrumbAction } from "./breadcrumbs";
 
 /**
  * A generic action type. Prefer using the more specific PayloadAction, Action, or MetaAction interfaces instead.
@@ -30,6 +32,14 @@ export interface Action<P, M> extends GenericAction<P, M> {
 export interface PayloadAction<P> extends GenericAction<P, void> {
   payload: P;
 }
+/** An action with a non-optional payload. */
+// export interface LoadAction<P> extends GenericAction<P, void> {
+//   payload: P;
+// }
+/** An action with a non-optional payload. */
+export interface BreadcrumbAction<P> extends GenericAction<P, void> {
+  payload: P;
+}
 
 /** An action without a payload but with non-optional metadata. */
 export interface MetaAction<M> extends GenericAction<void, M> {
@@ -47,7 +57,7 @@ export type AnyAction = GenericAction<any, any>;
  * New actions can be added as a discriminated union.
  * See https://redux.js.org/recipes/usage-with-typescript#type-checking-actions-action-creators
  */
-export type RootAction = CounterAction;
+export type RootAction = CounterAction | LoadingAction | BreadcrumbAction;
 
 export type RootDispatch = Dispatch<RootAction>;
 

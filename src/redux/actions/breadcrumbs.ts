@@ -20,7 +20,8 @@ export const actionCreators = {
       return dispatch(actionCreators.setBreadcrumbs(breadcrumbs));
     };
   },
-  setBreadcrumbs(breadcrumbs: []): SetBreadcrumbsAction {
+  setBreadcrumbs(breadcrumbs: number[]): SetBreadcrumbsAction {
     return { payload: breadcrumbs, type: SET_BREADCRUMBS };
   }
 };
+

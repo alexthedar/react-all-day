@@ -115,7 +115,7 @@ test("Challenge 3: async redux actions", async () => {
   expect(app.contains(<span>Loading...</span>)).toBe(false);
 });
 
-test.skip("Challenge 4: remote API call", async () => {
+test("Challenge 4: remote API call", async () => {
   /**
    * For this test, write an action creator that calls the `getStuff()`
    * function from `Server.ts`. This method returns a promise that
@@ -153,6 +153,5 @@ test.skip("Challenge 4: remote API call", async () => {
   button.simulate("click");
   await Bluebird.delay(DELAY_MAX);
   app.update();
-
-  expect(app.contains(<li />)).toBe(true);
+  expect(app.find('ul')).toHaveLength(1);
 });

@@ -1,8 +1,8 @@
 import { BreadcrumbAction } from "../actions/breadcrumbs";
-import { GET_BREADCRUMBS } from "../constants";
+import { SET_BREADCRUMBS } from "../constants";
 
 export type State = Readonly<{
-  breadcrumbs: [];
+  breadcrumbs: number[];
 }>;
 
 export const initialState: State = {
@@ -14,7 +14,7 @@ export const reducer = (
   action: BreadcrumbAction
 ): State => {
   switch (action.type) {
-    case GET_BREADCRUMBS:
+    case SET_BREADCRUMBS:
       return { ...state, breadcrumbs: action.payload };
     default:
       return state;

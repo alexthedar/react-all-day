@@ -1,4 +1,5 @@
 export { actionCreators as counterActions, CounterAction } from "./counter";
+export { actionCreators as breadcrumbActions, BreadcrumbAction } from "./breadcrumbs";
 
 export {
   ThunkAction,

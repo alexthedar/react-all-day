@@ -40,12 +40,12 @@ export class App extends React.PureComponent<Props> {
         <section className="hero is-primary">
           <div className="hero-body">
             <div className="container">
-              <Breadcrumb values={breadcrumbs} />
               <h1 className="title">Counter App</h1>
             </div>
           </div>
         </section>
         <section className="container">
+          <Breadcrumb values={breadcrumbs} />
           <div className="level">
             <div className="level-item has-text-centered">
               <div>
